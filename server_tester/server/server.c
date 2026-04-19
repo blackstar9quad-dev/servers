@@ -1,12 +1,10 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <stdlib.h>
-#include <sys/socket.h>
-#include <sys/types.h>
 #include <string.h>
 #include <unistd.h>
 #include <arpa/inet.h>
-#include <netdb.h>
+#include <../dbase.h>
 
 int comparor(){
 };
@@ -38,9 +36,14 @@ int socket_optifier(){
 int socket_initlizor(){
 };
 
-int command_parser(int argc , char *args[]){
-};
-
 int main(int argc , char *args[]){
+	int res ;
+	printf("STARTING THE PROCESS ...... ]n");
+
+	res = command_parser(argc , args);
+	if(res <0){
+		printf("OPERATION FAILED \n");
+		return -1;
+	};
 };
 

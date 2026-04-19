@@ -23,13 +23,12 @@ struct client_connection{
 struct sock_info{ //socket level 
 	struct *tcp_infos ;
 	unsigned int mode            : 1;
-	unsigned int non-blocking    : 1;
+	unsigned int non-blocking    : 1; // --non-blcking fcntl logic 
         unsigned int reuseaddr       : 1; // Allow binding to a port in before the TIME_WAIT:1m to 4m
 	unsigned int recv_buff       : 1; // SO_RCVBUF
 	size_t reciver_buffer;
 	unsigned int send_buff       : 1; // SO_SNDBUF
 	size_t sender_buffer;
-	unsigned int nodelay         : 1;
 	unsigned int keepalive       : 1;   // SO_KEEPALIVE 
 	unsigned int linger          : 1;   // struct linger  SO_LINGER
 	int time_linger ;
