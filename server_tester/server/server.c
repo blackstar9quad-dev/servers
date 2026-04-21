@@ -109,7 +109,7 @@ int main(int argc , char *args[]){
 		return -1;
 	};
 
-	res = socket_optimizer(pol,fd);
+	res = socket_optimizer(fd,pol,argc,args);
 	if(res<0){
 		printf("operation failed \n");
 		return -1;

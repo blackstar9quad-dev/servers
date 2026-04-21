@@ -26,7 +26,7 @@ struct server_sock_info{ //socket level
 	struct tcp_infos *tcp_info ;
 	struct ip_info   *ip_info ;
 	unsigned int mode            : 1;
-	unsigned int non-blocking    : 1; // --non-blcking fcntl logic 
+	unsigned int non_blocking    : 1; // --non-blcking fcntl logic 
         unsigned int reuseaddr       : 1; // Allow binding to a port in before the TIME_WAIT:1m to 4m
 	unsigned int recv_buff       : 1; // SO_RCVBUF
 	size_t reciver_buffer;
@@ -40,7 +40,7 @@ struct server_sock_info{ //socket level
 	unsigned int writetime       : 1;   // SO_SNDTIMEO
 	struct timeval writer_timeout;            // struct timeval SO_SNDTIMEO
 	unsigned int metrics         : 1;
-	unsigned int log-socket      : 1;   // SO_ERROR 
+	unsigned int log_socket      : 1;   // SO_ERROR 
 	unsigned int listen_socket   : 1;   // check if the socket is listen or not SO_ACCEPTCONN
 	unsigned int used_port       : 1;   //multiple socket can bin to the same port SO_REUSEPORT
 	int recivers;                       // SO_REUSEPORT 
@@ -50,7 +50,7 @@ struct sock_info{ //socket level
 	struct tcp_infos *tcp_info ;
 	struct ip_info   *ip_info  ;
 	unsigned int mode            : 1;
-	unsigned int non-blocking    : 1; // --non-blcking fcntl logic 
+	unsigned int non_blocking    : 1; // --non-blcking fcntl logic 
         unsigned int reuseaddr       : 1; // Allow binding to a port in before the TIME_WAIT:1m to 4m
 	unsigned int recv_buff       : 1; // SO_RCVBUF
 	size_t reciver_buffer;
@@ -64,7 +64,7 @@ struct sock_info{ //socket level
 	unsigned int writetime       : 1;   // SO_SNDTIMEO
 	struct timeval writer_timeout;            // struct timeval SO_SNDTIMEO
 	unsigned int metrics         : 1;
-	unsigned int log-socket      : 1;   // SO_ERROR 
+	unsigned int log_socket      : 1;   // SO_ERROR 
 	unsigned int listen_socket   : 1;   // check if the socket is listen or not SO_ACCEPTCONN
 	unsigned int used_port       : 1;   //multiple socket can bin to the same port SO_REUSEPORT
 	int recivers;                       // SO_REUSEPORT 

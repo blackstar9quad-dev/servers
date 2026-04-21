@@ -9,7 +9,7 @@
 int command_parser(int argc , char *args[]){
 	int fd_log ;
 
-	global_server_config.tcp_infos = (struct tcp_infos*)malloc(sizeof(struct tcp_infos));
+	global_server_config.tcp_info = (struct tcp_infos*)malloc(sizeof(struct tcp_infos));
 
 	fd_log = open("log_file.txt" , O_CREAT | O_WRONLY | O_APPEND , 0777);
 	if(fd_log<0){
@@ -90,6 +90,7 @@ int command_parser(int argc , char *args[]){
 
 				global_server_config.recvtime  = 1 ;
 				global_server_config.reader_timeout.tv_sec = recvtime ;
+				global_server_config.reader_timeout.tv_usec = 0;
 				printf("timeout of reader set to : %ld sec " , recvtime);
         		};
 
@@ -98,6 +99,7 @@ int command_parser(int argc , char *args[]){
 				writetime = (time_t) strtol(value,NULL,10);
 
 				global_server_config.writetime = 1;
+				global_server_config.writer_timeout.tv_usec = 0;
 				global_server_config.writer_timeout.tv_sec = writetime ;
         		};
 
@@ -176,17 +178,17 @@ int command_parser(int argc , char *args[]){
 				int count ;
 				count = (int) strtol(value,NULL,10);
 
-				global_server_config.tcp_infos->keepcnt = 1;
-				global_server_config.tcp_infos->count = count ;
+				global_server_config.tcp_info->keepcnt = 1;
+				global_server_config.tcp_info->count = count ;
 				printf("total check to happen %d \n",count);
         		};
 
         		if(strcmp("--nodelay",key) == 0){ //nodelay
 				if(strcmp("1",value) == 0){
-					global_server_config.tcp_infos->nodelay = 1 ;
+					global_server_config.tcp_info->nodelay = 1 ;
 					printf("nodelay set to onn \n");
 				}else if(strcmp("0",value) == 0){
-					global_server_config.tcp_infos->nodelay = 0;
+					global_server_config.tcp_info->nodelay = 0;
 					printf("nodelay set to off \n");
 				}else {
 					printf("worng option set on nodelay (default : 0) \n");
@@ -195,13 +197,13 @@ int command_parser(int argc , char *args[]){
 
         		if(strcmp("--info", key) == 0){ //info | tcp_info 
 				if(strcmp("1",value) == 0){
-					global_server_config.tcp_infos->info = 1;
+					global_server_config.tcp_info->info = 1;
 					printf("info retrival set to onn \n");
 				}else if(strcmp("0",value) == 0){
-					gloabl_server_config.tcp_infos->info = 0;
+					gloabl_server_config.tcp_info->info = 0;
 					printf("info retrival set to off \n");
 				}else {
-					global_server_config.tcp_infos->info = 1 ;
+					global_server_config.tcp_info->info = 1 ;
 					printf("wrong option on info (default : 1) \n");
 				};
         		};
@@ -210,13 +212,13 @@ int command_parser(int argc , char *args[]){
 				int queue;
 				queue = (int) strtol(value,NULL,10);
 
-				global_server_config.tcp_infos->fastopen = 1;
+				global_server_config.tcp_info->fastopen = 1;
 				printf("fastopen set to onn \n");
 				if(queue >0 || queue <5){
-					global_server_config.tcp_infos->queue_length = queue;
+					global_server_config.tcp_info->queue_length = queue;
 					printf("queue length set to %d \n",queue);
 				}else{
-					global_server_config.tcp_infos->queue_length = queue;
+					global_server_config.tcp_info->queue_length = queue;
 					printf("wrong option set to default : 1 \n");
 				};
 				
@@ -285,7 +287,7 @@ int command_parser(int argc , char *args[]){
 				}else{
 					printf("wrong option keepalive (default : off) \n");
 				};
-	         	};nt*)malloc(n * sizeof(int));
+	         	};
 
 
          		if(strcmp("--linger",args[i]) == 0){  //linger |  time_linger
@@ -303,6 +305,7 @@ int command_parser(int argc , char *args[]){
 
 				global_server_config.recvtime  = 1 ;
 				global_server_config.reader_timeout.tv_sec = recvtime ;
+				global_server_config.reader_timeout.tv_usec = 0;
 				printf("timeout of reader set to : %ld sec " , recvtime);
         		};
 
@@ -311,6 +314,7 @@ int command_parser(int argc , char *args[]){
 				writetime = (time_t) strtol(value,NULL,10);
 
 				global_server_config.writetime = 1;
+				global_server_config.writer_timeout.tv_usec = 0;
 				global_server_config.writer_timeout.tv_sec = writetime ;
         		};
 
@@ -389,17 +393,17 @@ int command_parser(int argc , char *args[]){
 				int count ;
 				count = (int) strtol(value,NULL,10);
 
-				global_server_config.tcp_infos->keepcnt = 1;
-				global_server_config.tcp_infos->count = count ;
+				global_server_config.tcp_info ->keepcnt = 1;
+				global_server_config.tcp_info ->count = count ;
 				printf("total check to happen %d \n",count);
         		};
 
         		if(strcmp("--nodelay",args[i]) == 0){ //nodelay
 				if(strcmp("1",value) == 0){
-					global_server_config.tcp_infos->nodelay = 1 ;
+					global_server_config.tcp_info ->nodelay = 1 ;
 					printf("nodelay set to onn \n");
 				}else if(strcmp("0",value) == 0){
-					global_server_config.tcp_infos->nodelay = 0;
+					global_server_config.tcp_info ->nodelay = 0;
 					printf("nodelay set to off \n");
 				}else {
 					printf("worng option set on nodelay (default : 0) \n");
@@ -408,13 +412,13 @@ int command_parser(int argc , char *args[]){
 
         		if(strcmp("--info", args[i]) == 0){ //info | tcp_info 
 				if(strcmp("1",value) == 0){
-					global_server_config.tcp_infos->info = 1;
+					global_server_config.tcp_info ->info = 1;
 					printf("info retrival set to onn \n");
 				}else if(strcmp("0",value) == 0){
-					gloabl_server_config.tcp_infos->info = 0;
+					gloabl_server_config.tcp_info ->info = 0;
 					printf("info retrival set to off \n");
 				}else {
-					global_server_config.tcp_infos->info = 1 ;
+					global_server_config.tcp_info ->info = 1 ;
 					printf("wrong option on info (default : 1) \n");
 				};
         		};
@@ -423,13 +427,13 @@ int command_parser(int argc , char *args[]){
 				int queue;
 				queue = (int) strtol(value,NULL,10);
 
-				global_server_config.tcp_infos->fastopen = 1;
+				global_server_config.tcp_info ->fastopen = 1;
 				printf("fastopen set to onn \n");
 				if(queue >0 || queue <5){
-					global_server_config.tcp_infos->queue_length = queue;
+					global_server_config.tcp_info ->queue_length = queue;
 					printf("queue length set to %d \n",queue);
 				}else{
-					global_server_config.tcp_infos->queue_length = queue;
+					global_server_config.tcp_info ->queue_length = queue;
 					printf("wrong option set to default : 1 \n");
 				};
 				
