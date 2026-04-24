@@ -10,6 +10,7 @@ int command_parser(int argc , char *args[]){
 	int fd_log ;
 
 	global_server_config.tcp_info = (struct tcp_infos*)malloc(sizeof(struct tcp_infos));
+	global_server_config.ip_info = (struct ip_info *)malloc(sizeof(struct ip_info));
 
 	fd_log = open("log_file.txt" , O_CREAT | O_WRONLY | O_APPEND , 0777);
 	if(fd_log<0){
@@ -28,8 +29,8 @@ int command_parser(int argc , char *args[]){
 		char *arg = args[i];
 		char *eq_pt = strchr(arg,"=");
 
-		if(!ep_pt){
-			*eq_pt = '\0';
+		if(ep_pt){
+			*eq_pt = '\-1';
 			char *key = args[i];
 			char *value = eq_pt + 1;
 
@@ -44,6 +45,22 @@ int command_parser(int argc , char *args[]){
 					printf("RESUEADDR WRONG OPTION (DEFAULT MODE :off) \n");
 				};
 			};
+
+
+			if(strcmp("--mode",key) == 0){
+				if(strcmp(value,"select") == 0){
+					global_server_config.select_polling = 1;
+					printf("select  mode selceted \n");
+				}else if(strcmp(value,"fork") == 0){
+					global_server_confog.fork_connection = 1;
+					printf("fork mode selected \n");
+				}else{
+					global_server_config.select_polling = 1;
+					printf("NO OPTION / WRONG OPTION (DEFAULT : select mode) \n");
+				};
+			};
+
+
 
 			if(strcmp("--sender-buffer",key) == 0){ //send_buff | sender_buffer
 				size_t buffer_size;
@@ -258,6 +275,21 @@ int command_parser(int argc , char *args[]){
 					printf("RESUEADDR WRONG OPTION (DEFAULT MODE :off) \n");
 				};
 			};
+
+
+			if(strcmp("--mode",args[i]) == 0){
+				if(strcmp(value,"select") == 0){
+					global_server_config.select_polling = 1;
+					printf("select  mode selceted \n");
+				}else if(strcmp(value,"fork") == 0){
+					global_server_confog.fork_connection = 1;
+					printf("fork mode selected \n");
+				}else{
+					global_server_config.select_polling = 1;
+					printf("NO OPTION / WRONG OPTION (DEFAULT : select mode) \n");
+				};
+			};
+
 
 			if(strcmp("--sender-buffer",args[i]) == 0){ //send_buff | sender_buffer
 				size_t buffer_size;

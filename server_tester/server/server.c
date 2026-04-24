@@ -34,7 +34,22 @@ int network_listener(){
 int network_initlizor(){
 };
 
-int socket_optifier(){
+int socket_listener(int fd, int clientfd , struct sockaddr_in *client , fd_set masterfd , int piper[2]){
+
+	printf("Binding the socktet to the port and the ip \n");
+	if(bind(fd,addr_pointer->ai_family,addr_pointer->addrlen) <0){
+		perror("ERROR IN BINDING THE SOCKET \n");
+		return -1;
+	};
+	printf("Binding complete \n");
+
+	printf("Server Listening for connections \n");
+	if(listen(fd,5)<0){
+		perror("LISTENING ERROR \n");
+		return -1;
+	}else{
+		int res =  connection_parter(fd ,clientfd, client , masterfd,piper);
+	};
 };
 
 int socket_initlizor(struct addrinfo *server , struct addrinfo *pol , int *fd){
@@ -80,9 +95,14 @@ int socket_initlizor(struct addrinfo *server , struct addrinfo *pol , int *fd){
 };
 
 int main(int argc , char *args[]){
+	fd_set readfds , masterfds;
 	struct addrinfo server , pol ;
-	int res , fd ;
+	struct sockaddr_in client ;
+	int res , fd ,  client_fd , piper[2] ;
 	char choice[10];
+	int checker = 1 ;  // 1 stands for the server and 0 is for the client to diffrentiate whose sockinfo to fill when in socket_optimizer
+
+	
 	printf("STARTING THE PROCESS ...... ]n");
 
 	printf("do u wanna start the server \n");
@@ -109,13 +129,15 @@ int main(int argc , char *args[]){
 		return -1;
 	};
 
-	res = socket_optimizer(fd,pol,argc,args);
+	res = socket_optimizer(fd,pol,argc,args,checker);
 	if(res<0){
 		printf("operation failed \n");
 		return -1;
 	};
 
-
-
+	if(socket_listener(fd,pol , &client , &client_fd) < 0){
+		printf("OPERATION FAILED \n");
+		return 0;
+	};
 };
 
