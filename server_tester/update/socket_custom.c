@@ -5,10 +5,10 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-void non_blocking_fn(int fd , struct addrinfo *server , int argc , char *args[],  struct sock_info *pointer){
+void non_blocking_fn(int fd ,struct sock_info *pointer){
 };
 
-void reuseaddr_fn(int fd , struct addrinfo *server , int argc , char *args[],  struct sock_info *pointer){
+void reuseaddr_fn(int fd ,struct sock_info *pointer){
 	if(!*pointer->reuseaddr){
 		return 0;
 	};
@@ -23,7 +23,7 @@ void reuseaddr_fn(int fd , struct addrinfo *server , int argc , char *args[],  s
 	return 0;
 };
 
-void recv_buffer_fn(int fd , struct addrinfo *server , int argc , char *args[] ,  struct sock_info *pointer){
+void recv_buffer_fn(int fd ,  struct sock_info *pointer){
 
 	if(!*pointer->recv_buff){
 		return 0;
@@ -40,7 +40,7 @@ void recv_buffer_fn(int fd , struct addrinfo *server , int argc , char *args[] ,
 
 };
 
-void sender_buffer_fn(int fd , struct addrinfo *server , int argc , char *args[] ,  struct sock_info *pointer){
+void sender_buffer_fn(int fd , struct sock_info *pointer){
 
 	if(!*pointer->send_buff){
 		return 0;
@@ -57,7 +57,7 @@ void sender_buffer_fn(int fd , struct addrinfo *server , int argc , char *args[]
 
 };
 
-void keepalive_fn(int fd , struct addrinfo *server , int argc ,  char *args[] ,  struct sock_info *pointer){
+void keepalive_fn(int fd ,  struct sock_info *pointer){
 
 	if(!*pointer->keepalive){
 		return 0;
@@ -73,7 +73,7 @@ void keepalive_fn(int fd , struct addrinfo *server , int argc ,  char *args[] , 
 
 };
 
-void linger_fn(int fd , struct addrinfo *server , int argc , char *args[] , struct sock_info *pointer){
+void linger_fn(int fd , struct sock_info *pointer){
 	if(!*pointer->linger){
 		return 0;
 	};
@@ -92,7 +92,7 @@ void linger_fn(int fd , struct addrinfo *server , int argc , char *args[] , stru
 	return 0;
 };
 
-void recvtime_fn(int fd , struct addrinfo *server , int argc , char *args[],  struct sock_info *pointer){
+void recvtime_fn(int fd ,struct sock_info *pointer){
 	
 	if(*pointer->recvtime){
 		return 0;
@@ -109,7 +109,7 @@ void recvtime_fn(int fd , struct addrinfo *server , int argc , char *args[],  st
 
 };
 
-void writetime_fn(int fd , struct addrinfo *server , int argc , char *args[],  struct sock_info *pointer){
+void writetime_fn(int fd ,struct sock_info *pointer){
 	
 	if(*pointer->writetime){
 		return 0;
@@ -126,7 +126,7 @@ void writetime_fn(int fd , struct addrinfo *server , int argc , char *args[],  s
 
 };
 
-void log_socket_fn(int fd , struct addrinfo *server , int argc , char *args[],  struct sock_info *pointer){
+void log_socket_fn(int fd ,struct sock_info *pointer){
 	if(!*pointer->log_socket){
 		return 0 ; 
 	};
@@ -140,7 +140,7 @@ void log_socket_fn(int fd , struct addrinfo *server , int argc , char *args[],  
 	return 0;
 };
 
-void used_ports_fn(int fd , struct addrinfo *server , int argc , char *args[],  struct sock_info *pointer){
+void used_ports_fn(int fd ,struct sock_info *pointer){
 	if(*pointer->used_port){
 		return 0;
 	};
@@ -154,7 +154,7 @@ void used_ports_fn(int fd , struct addrinfo *server , int argc , char *args[],  
 	return 0;
 };
 
-void nodelayer_fn(int fd , struct addrinfo *server , int argc , char *args[],  struct sock_info *pointer){
+void nodelayer_fn(int fd ,struct sock_info *pointer){
 	if(!*pointer->tcp_info->nodelay){
 		return 0;
 	};
@@ -169,7 +169,7 @@ void nodelayer_fn(int fd , struct addrinfo *server , int argc , char *args[],  s
 
 };
 
-void keepidle_fn(int fd , struct addrinfo *server , int argc , char *args[] ,  struct sock_info *pointer){
+void keepidle_fn(int fd ,struct sock_info *pointer){
 	if(!*pointer->tcp_info->keepidle){
 		return 0;
 	};
@@ -183,7 +183,7 @@ void keepidle_fn(int fd , struct addrinfo *server , int argc , char *args[] ,  s
 	return 0;
 };
 
-void keepinterval_fn(int fd , struct addrinfo *server , int argc , char *args[],  struct sock_info *pointer){
+void keepinterval_fn(int fd ,struct sock_info *pointer){
 	if(!*pointer->tcp_info->keepintvl){
 		return 0;
 	};
@@ -197,7 +197,7 @@ void keepinterval_fn(int fd , struct addrinfo *server , int argc , char *args[],
 	return 0;
 };
 
-void keepcnt_fn(int fd , struct addrinfo *server , int argc , char *args[] ,  struct sock_info *pointer){
+void keepcnt_fn(int fd ,struct sock_info *pointer){
 	if(!*pointer->tcp_info->keepcnt){
 		return 0;
 	};
@@ -211,7 +211,7 @@ void keepcnt_fn(int fd , struct addrinfo *server , int argc , char *args[] ,  st
 	return 0;
 };
 
-void fastopen_fn(int fd , struct addrinfo *server , int argc , char *args[],  struct sock_info *pointer){
+void fastopen_fn(int fd ,struct sock_info *pointer){
 	if(!*pointer->tcp_info->fastopen){
 		return 0;
 	};
@@ -225,7 +225,7 @@ void fastopen_fn(int fd , struct addrinfo *server , int argc , char *args[],  st
 	return 0;
 };
 
-void ttl_layer(int fd , struct addrinfo *server , int argc , char *args[], struct sock_info *pointer ){
+void ttl_layer(int fd ,struct sock_info *pointer ){
 	if(!*pointer->ip_info->ttl){
 		return 0;
 	}
@@ -239,7 +239,7 @@ void ttl_layer(int fd , struct addrinfo *server , int argc , char *args[], struc
 	return 0;
 };
 
-void tos_layer(int fd , struct addrinfo *server , int argc , char *args[],  struct sock_info *pointer){
+void tos_layer(int fd ,struct sock_info *pointer){
 	if(!*pointer->ip_info->tos){
 		return 0;
 	}
@@ -253,7 +253,7 @@ void tos_layer(int fd , struct addrinfo *server , int argc , char *args[],  stru
 	return 0;
 };
 
-typedef void (*optimizer)(int fd , struct addrinfo *pol , int argc , char *args[] , struct sock_info *pointer);
+typedef void (*optimizer)(int fd ,struct sock_info *pointer);
 
 typedef struct{
 	char option_name[30]; ; 
@@ -280,7 +280,7 @@ option_entry opt_table[] = {
 	{"IP_TOS" , tos_layer},
 };
 
-int socket_optimizer(int fd , struct addrinfo *pol , int argc , char *args[] ,int checker ){
+int socket_optimizer(int fd ,int checker ){
 	printf("optimizing the socket according the commands passed \n");
 	int count;
 	count  =  sizeof(opt_table) / sizeof(opt_table[0]) ;
@@ -299,7 +299,7 @@ int socket_optimizer(int fd , struct addrinfo *pol , int argc , char *args[] ,in
 	};
 
 	for(int i = 0 ;  i <= count ; i++){
-		opt_table[i].fn(fd,pol,argc,args,pointer);
+		opt_table[i].fn(fd,pointer);
 	};
 
 	printf("OPERATION COMPLETED \n");

@@ -34,6 +34,7 @@ struct client_connection{
 struct sock_info{ //socket level 
 	struct tcp_infos *tcp_info ;
 	struct ip_info   *ip_info ;
+	char PORT[10] ;
 	unsigned int select_polling  : 1;
 	unsigned int fork_connection : 1;
 	unsigned int mode            : 1;
@@ -90,8 +91,15 @@ struct ip_info{
 	int tos_value;
 };
 
+struct client_instruction{
+	int type ;
+	int client_fd ;
+	char  connection_id[20];
+};
+
 int number_of_connections ;
 struct client_connection *root_info ;
 struct client_connection *fd_map[max_fd];
 struct sock_info  global_server_config ;
+struct client_connection *fd_map[max_fds];
 #endif

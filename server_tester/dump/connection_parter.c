@@ -6,6 +6,32 @@
 #include <string.h>
 
 
+struct client_message *message_parser(int client_fd , char connection_info[1024]){
+	char *comm_ptr =  strchr(connection_info,"@");
+	*comm_ptr = '\0';
+
+	struct client_message *client_mssg =  (struct client_message *)malloc(sizeof(struct client_message));
+
+	char *command =  comm_ptr - 1 ;
+	char *connection_id = comm_ptr + 1;
+
+	if(strcmp(command,"ADD") == 0){
+		client_mssg->type = 2;
+		client_mssg->client_fd = client_fd;
+		client_mssg->connection_id = connnection_id ;
+
+		printf("ADD MSSG MADE \n");
+	}else if(strcmp(command,"CREATE") == 0){
+		client_mssg->type =  1;
+		client_mssg->client_fd = client_fd ;
+		client_mssg->connection_id = connection_id ;
+
+		printf("CREATE MSSG MADE \n");
+	};
+
+	return client_mssg;
+};
+
 int client_network_handler(int client_fd ,  int server_fd , struct addrinfo server , int piper[2]){
 	int reader, writer ;
 	char connection_info[1024];
@@ -21,6 +47,7 @@ int client_network_handler(int client_fd ,  int server_fd , struct addrinfo serv
 	printf("SENT \n");
 	loff_t offset = 0;
 	while(bytes_read > offset){
+		printf("PATTER EXAMPLE <instruction>@<connection_id> \n");
 		byte_read = read(clientfd,connection_info+offset,sizeof(connection_info)-offset);
         	if(bytes_read <0){
 	        	perror("READ  ERROR \n");
@@ -33,9 +60,15 @@ int client_network_handler(int client_fd ,  int server_fd , struct addrinfo serv
 		offset += bytes_read ;
 	};
 
+	struct client_mesage *connection_detail = message_parser(client_fd,connection_info);
+
+	if(res < 0){
+		printf("OPERATION FAILED MESSAGE PARSER \n");
+		return -1;
+	};
 	printf("user detail recived \n");
 
-	if(write(piper[1],connection_info,strlen(connection_info)) <0){
+	if(write(piper[1],connection_detail,strlen(connection_detail)) <0){
 		perror("ERROR IN WRITING TO THE PIPE \n");
 		return -1;
 	};

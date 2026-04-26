@@ -30,7 +30,7 @@ int command_parser(int argc , char *args[]){
 		char *eq_pt = strchr(arg,"=");
 
 		if(ep_pt){
-			*eq_pt = '\-1';
+			*eq_pt = '\0';
 			char *key = args[i];
 			char *value = eq_pt + 1;
 
