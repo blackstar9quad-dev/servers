@@ -1,4 +1,4 @@
-#ifndef MY_NETWORK_H
+#ifndef MY_okay soi we have a bit of struggle flow wise  , the problem with that is when we get the  structure when we get the clinet fd we have made a struct that contain the bit filed like we havfe of the server fro the user and that is pointed to in the main connection struct of clinet_info that reflect boitht he clinets connections , now we can do some things here that i just thoght of as i am wrting , so what we can do is  make a globaNETWORK_H
 #define MY_NETWORK_H
 
 #include <netdb.h>
@@ -13,20 +13,13 @@ struct client_connection{
 	char *connectionid ;
 	int client_sock_one;
 	int client_sock_two;
-	char writer_buffer[4028];
-	char reader_buffer[4028];
-	fd_set sender ; 
-	fd_set reciver;
+	char buffer[4028];
+	unsigned int readcount	:1;
 	char *server_ip;
 	char *client_ip_one;
 	char *client_ip_two;
-	struct addrinfo *client_addrinfo_one;
-	struct addrinfo *client_addrinfo_two;
-	struct addrinfo *server_addinfo;
 	struct sock_info *client_sock_one_info;
 	struct sock_info *client_sock_two_info;
-	char *customs[] ;
-	char *optval_client[];
 	struct db *db_next;
 	struct client_connection *next_connection
 };
@@ -98,8 +91,8 @@ struct client_instruction{
 };
 
 int number_of_connections ;
-struct client_connection *root_info ;
-struct client_connection *fd_map[max_fd];
+int maxfds;
 struct sock_info  global_server_config ;
+struct sock_info  *global_client_info[maxfds];
 struct client_connection *fd_map[max_fds];
 #endif
